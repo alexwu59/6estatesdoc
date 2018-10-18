@@ -1,0 +1,17 @@
+  /*调用删除操作类去执行删除:
+        AMIDataFileDeleteTool:
+                 1.根据taskId 查找到 fileid
+                 2.根据fileId，找到rowkey list
+                 3.循环处理每一个rowkey：
+                     1.判断rowkey对应的表是什么类型：
+                        1如果是note表的rowkey，去掉rowkey里的_,然后根据oid+rowkey创建rowkey
+                        2如果是comment表的rowkey，对rowkey进行一个去_处理，生产多个rowkey结果，然后组合成多个rowkey
+
+                     2.把rowkey安装表类型放入不同的list中
+                 4.去hbase中删除rowlist里中的数据
+                 5.记录删除成功的个数
+                 6.更新数据库中的表pcr_object_file_delete表中的status，del_count字段
+                   更新pcr_object_file_delete中的status字段
+
+       */
+
