@@ -1,0 +1,26 @@
+国内repos.6estates.com解析的地址为香港ip：47.52.64.245
+机器登录账号（root/bigdata!Aliyun100）
+需要修改该机器的白名单，修改以下配置：
+vim /public/data/nginx-webproxy/conf/conf.d/repos.conf
+server {
+          listen          80;
+          server_name     repos.6estates.com;
+          allow 36.33.244.17;
+          #allow 39.108.167.81;
+          deny all;
+          location / {
+             proxy_pass http://6proxy;
+             include nocache.conf;
+         }
+     }
+修改红色部分ip，然后重启容器：
+docker ps -a |grep k8s_nginx-webproxy_nginx-webproxy | awk '{print $NF}' | xargs docker restart
+重启后确认容器运行正常：
+ docker ps 
+看到k8s_nginx-webproxy_nginx-webproxy* 的status为Up * seconds
+
+如有问题，请及时联系我！
+
+谢谢！
+、
+葛勇
